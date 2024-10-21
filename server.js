@@ -4,7 +4,12 @@ const express = require('express');
 const cors = require('cors');
 const app = express();
 
-app.use(cors());
+app.use(cors({
+    origin: 'http://3.143.111.4',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    credentials: true
+}));
+
 app.use(express.json());
 
 mongoose.connect(process.env.MONGODB_URL)
@@ -20,6 +25,6 @@ const moviesRouter = require('./routes/movies');
 // Usar rutas
 app.use('/movies', moviesRouter);
 
-app.listen(process.env.PORT, () => {
+app.listen(process.env.PORT, '0.0.0.0', () => {
     console.log(`Server started on port ${process.env.PORT}`)
 });
